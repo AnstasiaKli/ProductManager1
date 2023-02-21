@@ -16,9 +16,10 @@ public class ProductManagerTest {
     Product Smartphone = new Smartphone(4, "Samsung Galaxy S22", 55000, "Samsung");
     Product Smartphone1 = new Smartphone(5, "Iphone 14 Pro", 95000, "Apple");
     Product Smartphone2 = new Smartphone(6, "Xiaomi 12", 57000, "Xiaomi");
+    Product Smartphone3 = new Smartphone(7, "Iphone 13", 60000, "Apple");
 
     @Test
-    public void shouldSearchByName() {
+    public void shouldSearchOneProduct() {
 
         manager.add(Book);
         manager.add(Book1);
@@ -26,6 +27,7 @@ public class ProductManagerTest {
         manager.add(Smartphone);
         manager.add(Smartphone1);
         manager.add(Smartphone2);
+        manager.add(Smartphone3);
 
         String name = "Harry Potter and the Goblet of Fire";
 
@@ -36,13 +38,32 @@ public class ProductManagerTest {
     }
 
     @Test
-    public void shouldNotSearch() {
+    public void shouldSearchSeveralProducts() {
         manager.add(Book);
         manager.add(Book1);
         manager.add(Book2);
         manager.add(Smartphone);
         manager.add(Smartphone1);
         manager.add(Smartphone2);
+        manager.add(Smartphone3);
+
+        String name = "Iphone";
+
+
+        Product[] expected = {Smartphone1, Smartphone3};
+        Product[] actual = manager.searchBy(name);
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSearchWhenNoOneProductFits() {
+        manager.add(Book);
+        manager.add(Book1);
+        manager.add(Book2);
+        manager.add(Smartphone);
+        manager.add(Smartphone1);
+        manager.add(Smartphone2);
+        manager.add(Smartphone3);
 
         String name = "Honor 10";
 
@@ -50,8 +71,6 @@ public class ProductManagerTest {
         Product[] actual = manager.searchBy(name);
         Assertions.assertArrayEquals(expected, actual);
     }
-
-
 
     @Test
     public void shouldAddProduct() {
@@ -69,7 +88,9 @@ public class ProductManagerTest {
         manager.add(Smartphone);
         manager.add(Smartphone1);
         manager.add(Smartphone2);
-        Product[] expected = {Book, Book1, Book2, Smartphone, Smartphone1, Smartphone2};
+        manager.add(Smartphone3);
+
+        Product[] expected = {Book, Book1, Book2, Smartphone, Smartphone1, Smartphone2, Smartphone3};
         Product[] actual = repository.findAll();
         Assertions.assertArrayEquals(expected, actual);
     }
