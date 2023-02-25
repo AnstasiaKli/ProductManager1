@@ -50,7 +50,7 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void shouldRemoveById() {
+    public void shouldRemoveWhenProductExist() {
 
         repository.save(Book);
         repository.save(Book1);
@@ -68,7 +68,7 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void shouldThrowException() {
+    public void shouldRemoveWhenProductNotExist() {
 
         repository.save(Book);
         repository.save(Book1);
@@ -81,20 +81,4 @@ public class ProductRepositoryTest {
 
         Assertions.assertThrows(NotFoundException.class, () -> repository.removeById(8));
     }
-
-    @Test
-    public void shouldThrowExistingItem() {
-
-        repository.save(Book);
-        repository.save(Book1);
-        repository.save(Book2);
-        repository.save(Smartphone);
-        repository.save(Smartphone1);
-        repository.save(Smartphone2);
-        repository.save(Smartphone3);
-
-
-        Assertions.assertThrows(NotFoundException.class, () -> repository.removeById(5), "Product with id: " + 5 + " not found");
-    }
-
 }
